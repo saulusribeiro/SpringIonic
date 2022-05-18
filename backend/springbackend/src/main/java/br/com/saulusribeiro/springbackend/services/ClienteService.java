@@ -11,12 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.saulusribeiro.springbackend.domain.Cidade;
-import br.com.saulusribeiro.springbackend.domain.Cliente;W
-import br.com.saulusribeiro.springbackend.domain.Endereco;
-import br.com.saulusribeiro.springbackend.domain.enums.TipoCliente;
-import br.com.saulusribeiro.springbackend.dto.ClienteDTO;
-import br.com.saulusribeiro.springbackend.dto.ClienteNewDTO;
+import br.com.saulusribeiro.springbackend.domain.Cliente;
 import br.com.saulusribeiro.springbackend.repositories.CidadeRepository;
 import br.com.saulusribeiro.springbackend.repositories.ClienteRepository;
 import br.com.saulusribeiro.springbackend.repositories.EnderecoRepository;
@@ -30,6 +25,7 @@ public class ClienteService {
 	private ClienteRepository repo;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+	@Autowired
 	private CidadeRepository   cidadeRepo;
 
 	public Cliente find(Integer id) {
@@ -96,10 +92,10 @@ public class ClienteService {
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
 	}
-
+	 /*	
 	// Metodo auxiliar para instanciar uma Cliente a partir de um objeto DTO
 
-	public Cliente fromDTO(ClienteDTO objDTO) {
+  public Cliente fromDTO(ClienteDTO objDTO) {
 
 		// o cpf e o tipo do cliente sao nulos pois nao existem no DTO
 
@@ -124,6 +120,6 @@ public class ClienteService {
 
 		return cli;
 
-	}
+	} */
 
 }

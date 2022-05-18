@@ -6,7 +6,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,25 +17,34 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.saulusribeiro.springbackend.domain.enums.TipoCliente;
 
 @Entity
-public class Cliente implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Cliente implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	@Column(unique=true)
 	private String email;
-	private String cpfOuCnpj;
+	private String cpfcnpj;
+	
+	// Massete para armazenar um inteiro, em um campo enum
+	
 	private Integer tipo;
 	
-	@JsonManagedReference
-	@OneToMany(mappedBy="cliente")
+	// Proteger os cliente liberando a serialização
+	
+	@OneToMany(mappedBy = "cliente", cascade=CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
+	
+	// Vamos usar uma coleção para associar os telefones aos clientes sem repetição
+	// Utilizar entidade fraca para criar tabela de telefones no banco
 	
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
@@ -43,17 +54,19 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy="cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
+	// Construtores
 	public Cliente() {
+		
 	}
 
-	public Cliente(Integer id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+	public Cliente(Integer id, String nome, String email, String cpfcnpj, TipoCliente tipo) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
-		this.cpfOuCnpj = cpfOuCnpj;
-		this.tipo = tipo.getCod();
-	}
+		this.cpfcnpj = cpfcnpj;
+		this.tipo = (tipo==null) ? null : tipo.getCod();
+		}
 
 	public Integer getId() {
 		return id;
@@ -79,12 +92,12 @@ public class Cliente implements Serializable {
 		this.email = email;
 	}
 
-	public String getCpfOuCnpj() {
-		return cpfOuCnpj;
+	public String getCpfcnpj() {
+		return cpfcnpj;
 	}
 
-	public void setCpfOuCnpj(String cpfOuCnpj) {
-		this.cpfOuCnpj = cpfOuCnpj;
+	public void setCpfcnpj(String cpfcnpj) {
+		this.cpfcnpj = cpfcnpj;
 	}
 
 	public TipoCliente getTipo() {
@@ -110,7 +123,6 @@ public class Cliente implements Serializable {
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
 	}
-
 	public List<Pedido> getPedidos() {
 		return pedidos;
 	}
@@ -118,6 +130,7 @@ public class Cliente implements Serializable {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -142,6 +155,8 @@ public class Cliente implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}	
+	}
+
+	
 
 }
