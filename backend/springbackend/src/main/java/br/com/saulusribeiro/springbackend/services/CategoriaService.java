@@ -3,10 +3,12 @@ package br.com.saulusribeiro.springbackend.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.saulusribeiro.springbackend.domain.Categoria;
 import br.com.saulusribeiro.springbackend.repositories.CategoriaRepository;
+import br.com.saulusribeiro.springbackend.services.exceptions.DataIntegrityException;
 import br.com.saulusribeiro.springbackend.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -35,4 +37,14 @@ public class CategoriaService {
 		find(obj.getId());  //" verifica se existe e sai por exception se não existir"
 		return repo.save(obj);
 	}
+	public void delete(Integer id) {
+		try {
+			find(id);
+			repo.deleteById(id);
+		} catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel excluir uma categoria que possui produtos");
+	
+		}
+	}
 }
+	
