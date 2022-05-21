@@ -1,5 +1,6 @@
 package br.com.saulusribeiro.springbackend.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,10 @@ public class CategoriaService {
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
+	public List<Categoria> findAll() {
+		return repo.findAll();
+	}
+
 
 	public Categoria insert(Categoria obj) {
 
