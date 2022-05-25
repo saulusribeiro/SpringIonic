@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import br.com.saulusribeiro.springbackend.domain.Categoria;
+import br.com.saulusribeiro.springbackend.dto.CategoriaDTO;
 import br.com.saulusribeiro.springbackend.repositories.CategoriaRepository;
 import br.com.saulusribeiro.springbackend.services.exceptions.DataIntegrityException;
 import br.com.saulusribeiro.springbackend.services.exceptions.ObjectNotFoundException;
@@ -60,5 +61,8 @@ public class CategoriaService {
 			return repo.findAll(pageRequest);
 		
 		}
+	public Categoria fromDTO(CategoriaDTO objDTO) {
+		return new Categoria(objDTO.getId(),objDTO.getNome());
+	}
 }
 	

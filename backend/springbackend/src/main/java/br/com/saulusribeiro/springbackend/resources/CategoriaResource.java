@@ -3,6 +3,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +32,9 @@ public class CategoriaResource {
 		Categoria obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	@RequestMapping(method=RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDTO) {
+		Categoria obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.
 				fromCurrentRequest().path("/{id}").
@@ -41,8 +44,9 @@ public class CategoriaResource {
 	@RequestMapping(value="/{id}",
 			        method=RequestMethod.PUT,
 			        consumes = "application/json")
-	public ResponseEntity<Void> update(@RequestBody Categoria obj,
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDTO,
 			                           @PathVariable Integer id) {
+		Categoria obj = service.fromDTO(objDTO);
 		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();	
@@ -63,6 +67,9 @@ public class CategoriaResource {
 				                             collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
+	
+	// localhost:8080/categorias/page?linesPerPage=3&page=1
+	
 	@RequestMapping(value="/page",method=RequestMethod.GET)
 	public ResponseEntity<Page<CategoriaDTO>> 
 	            findPage(@RequestParam(value="page", defaultValue="0") Integer page, 
