@@ -8,6 +8,7 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.com.saulusribeiro.springbackend.domain.Cliente;
 import br.com.saulusribeiro.springbackend.domain.enums.TipoCliente;
 import br.com.saulusribeiro.springbackend.dto.ClienteNewDTO;
 import br.com.saulusribeiro.springbackend.repositories.ClienteRepository;
@@ -36,10 +37,10 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 			list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
 		}
 
-	/*	Cliente aux = repo.findByEmail(objDto.getEmail());
+		Cliente aux = repo.findByEmail(objDto.getEmail());
 		if (aux != null) {
 			list.add(new FieldMessage("email", "Email já existente"));
-		}*/
+		}
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
 			context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
