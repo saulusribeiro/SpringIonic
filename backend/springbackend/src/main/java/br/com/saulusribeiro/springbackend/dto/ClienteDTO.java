@@ -2,6 +2,10 @@ package br.com.saulusribeiro.springbackend.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import br.com.saulusribeiro.springbackend.domain.Cliente;
 
 
@@ -11,12 +15,12 @@ public class ClienteDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-//	@NotEmpty(message="Preenchimento do nome obrigatório")
-//	@Length(min=5, max=1120, message="O tamanho deve ser entre 5 e 120 caracteres")
+	@NotEmpty(message="Preenchimento do nome obrigatório")
+	@Size(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres")
 	private String  nome;
 	
-//	@NotEmpty(message="Preenchimento do E-mail obrigatório ")
-//	@Email(message="E-mail Inválido")
+	@NotEmpty(message="Preenchimento do E-mail obrigatório ")
+	@Email(message="E-mail Inválido")
 	private String  email;
 	
 	public ClienteDTO() {

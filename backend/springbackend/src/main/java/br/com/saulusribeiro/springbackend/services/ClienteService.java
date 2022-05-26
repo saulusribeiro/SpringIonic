@@ -11,7 +11,12 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.saulusribeiro.springbackend.domain.Cidade;
 import br.com.saulusribeiro.springbackend.domain.Cliente;
+import br.com.saulusribeiro.springbackend.domain.Endereco;
+import br.com.saulusribeiro.springbackend.domain.enums.TipoCliente;
+import br.com.saulusribeiro.springbackend.dto.ClienteDTO;
+import br.com.saulusribeiro.springbackend.dto.ClienteNewDTO;
 import br.com.saulusribeiro.springbackend.repositories.CidadeRepository;
 import br.com.saulusribeiro.springbackend.repositories.ClienteRepository;
 import br.com.saulusribeiro.springbackend.repositories.EnderecoRepository;
@@ -92,7 +97,7 @@ public class ClienteService {
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
 	}
-	 /*	
+	 	
 	// Metodo auxiliar para instanciar uma Cliente a partir de um objeto DTO
 
   public Cliente fromDTO(ClienteDTO objDTO) {
@@ -120,6 +125,6 @@ public class ClienteService {
 
 		return cli;
 
-	} */
+	}
 
 }
