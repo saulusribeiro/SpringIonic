@@ -43,8 +43,19 @@ public class CategoriaService {
 	}
 
 	public Categoria update(Categoria obj) {
-		find(obj.getId());  //" verifica se existe e sai por exception se não existir"
+		Categoria newObj = find(obj.getId());
+
+		// atualize os dados de newObj com base no argumento obj
+		updateData(newObj, obj);
+		// o mesmo metodo save usado no insert, quando o id é diferente de nulo ele
+		// atualiza o objeto
 		return repo.save(obj);
+
+	}
+	private void updateData(Categoria newObj, Categoria obj) {
+
+		newObj.setNome(obj.getNome());
+		
 	}
 	public void delete(Integer id) {
 		try {
