@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.saulusribeiro.springbackend.domain.Cliente;
 import br.com.saulusribeiro.springbackend.dto.ClienteDTO;
+import br.com.saulusribeiro.springbackend.dto.ClienteNewDTO;
 import br.com.saulusribeiro.springbackend.services.ClienteService;
 
 @RestController
@@ -34,7 +35,7 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteDTO objDTO) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDTO) {
 		Cliente obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.

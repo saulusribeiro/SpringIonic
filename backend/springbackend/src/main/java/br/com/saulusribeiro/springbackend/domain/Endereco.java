@@ -48,6 +48,7 @@ public class Endereco implements Serializable {
 		this.cep = cep;
 		this.cliente = cliente;
 		this.setCidade(cidade);
+		
 	}
 
 	public Integer getId() {
