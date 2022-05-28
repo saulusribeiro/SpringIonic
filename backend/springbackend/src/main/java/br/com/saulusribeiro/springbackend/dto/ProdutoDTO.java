@@ -2,6 +2,8 @@ package br.com.saulusribeiro.springbackend.dto;
 
 import java.io.Serializable;
 
+import br.com.saulusribeiro.springbackend.domain.Produto;
+
 public class ProdutoDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -14,14 +16,14 @@ public class ProdutoDTO implements Serializable{
 	public ProdutoDTO() {
 		
 	}
-/*	public ProdutoDTO( Produto obj) {
+	public ProdutoDTO( Produto obj) {
 		
 		id = obj.getId();
 		nome = obj.getNome();
 		preco = obj.getPreco();
 		
 	}
-*/	
+	
 	public Integer getId() {
 		return id;
 	}

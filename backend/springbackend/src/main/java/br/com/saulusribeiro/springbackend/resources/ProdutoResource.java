@@ -31,24 +31,19 @@ public class ProdutoResource {
 
 	}
 
-	/*	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<Page<ProdutoDTO>> findPage(
-			@RequestParam(value = "nome", defaultValue ="") String nome,
-			@RequestParam(value = "categorias", defaultValue ="") String categorias,
-			@RequestParam(value = "page", defaultValue ="0") Integer page, 
-			@RequestParam(value = "linesPerPage", defaultValue ="24") Integer linesPerPage,
-			@RequestParam(value = "orderBy", defaultValue ="nome") String orderBy,
-			@RequestParam(value = "direction", defaultValue ="ASC") String direction ) {
-		
+			@RequestParam(value="nome", defaultValue="") String nome, 
+			@RequestParam(value="categorias", defaultValue="") String categorias, 
+			@RequestParam(value="page", defaultValue="0") Integer page, 
+			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
+			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
+			@RequestParam(value="direction", defaultValue="ASC") String direction) {
 		String nomeDecoded = URL.decodeParam(nome);
-		List<Integer> ids = URL.decodeInt(categorias);
-	//	Page<Produto> lista = service.search(nomeDecoded, ids, page, linesPerPage, orderBy, direction);
-				
-				
-		// Msssete : Percorrer a lista utilizando o recurso do JAVA 8 Stream, e converte uma lista para outra lista
-		
-	//	Page<ProdutoDTO> listaDTO = lista.map(obj -> new  ProdutoDTO(obj));
-	//	return ResponseEntity.ok().body(listaDTO);
-	}  */
+		List<Integer> ids = URL.decodeIntList(categorias);
+		Page<Produto> list = service.search(nomeDecoded, ids, page, linesPerPage, orderBy, direction);
+		Page<ProdutoDTO> listDto = list.map(obj -> new ProdutoDTO(obj));  
+		return ResponseEntity.ok().body(listDto);
+	}
 
 }

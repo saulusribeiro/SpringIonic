@@ -9,7 +9,7 @@ public class URL {
 	
 	// cria um método estático q não precisa instanciar
 	
-	public static List<Integer> decodeInt(String s){
+	public static List<Integer> decodeIntList(String s){
 		String[] vet = s.split(",");
 		List<Integer> list = new ArrayList();
 		
