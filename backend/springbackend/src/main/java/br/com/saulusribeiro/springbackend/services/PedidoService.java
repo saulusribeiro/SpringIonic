@@ -53,6 +53,9 @@ public class PedidoService {
 		obj.getPagamento().setPedido(obj);
 		if(obj.getPagamento() instanceof PagamentoComBoleto) {
 			PagamentoComBoleto pagto = (PagamentoComBoleto) obj.getPagamento();
+			// numa situação real faz a chamada ao webservice do cartão
+			// para preencher data de vencimento do boleto. Esta é apenas
+			// uma simulação via serviço
 			boletoService.preencherPagamentoComBoleto(pagto, obj.getInstante());
 		}
 		obj = repo.save(obj);
@@ -61,9 +64,9 @@ public class PedidoService {
 		for(ItemPedido ip :  obj.getItens()) {
 			
 			ip.setDesconto(0.00);
-	//		ip.setProduto(produtoService.find(ip.getProduto().getId()));
-			ip.setPreco(ip.getProduto().getPreco());
-//			ip.setPedido(obj);
+			ip.setProduto(produtoService.find(ip.getProduto().getId()));
+		    ip.setPreco(ip.getProduto().getPreco());
+			ip.setPedido(obj);
 		}
 		
 		itemPedidoRepository.saveAll(obj.getItens());
