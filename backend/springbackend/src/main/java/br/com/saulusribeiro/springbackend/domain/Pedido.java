@@ -1,8 +1,12 @@
 package br.com.saulusribeiro.springbackend.domain;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -138,4 +142,31 @@ public class Pedido implements Serializable {
 		}
 		return soma;
 	}
+
+	@Override
+	public String toString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+		@SuppressWarnings("unused")
+		NumberFormat nf =  NumberFormat.getCurrencyInstance(new Locale("pt","BR"));
+		StringBuilder builder = new StringBuilder();
+		builder.append("Pedido número:");
+		builder.append(getId());
+		builder.append(", Instante:");
+		builder.append(sdf.format(getInstante()));
+		builder.append(", Cliente:");
+		builder.append(getCliente().getNome());
+		builder.append(", Situação Pagamento:");
+		builder.append(getPagamento().getEstado().getDescricao());
+		builder.append("\nDetalhes:\n");
+		builder.append(", Instante:");
+		for(ItemPedido ip : getItens()) {
+			builder.append(ip.toString());
+		}		
+		builder.append(", Valor Total:");
+		builder.append(nf.format(getValorTotal()));
+		
+		return builder.toString();
+	}
+
+	
 }
