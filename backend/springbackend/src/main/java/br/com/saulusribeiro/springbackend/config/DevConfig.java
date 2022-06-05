@@ -25,17 +25,17 @@ public class DevConfig {
 	@Bean
 	public boolean instantiateTestDatabase() throws ParseException {
 
-	if (!"create".equals(strategy)) {
+		if (!"create".equals(strategy)) {
 			return false;
-			}
-	
+		}
+
 		dbService.instantiateDatabase();
 		return true;
 	}
+
 	@Bean
 	public EmailService emailService() {
 		return new SmtpEmailService();
 	}
-
 
 }
