@@ -3,8 +3,6 @@ package br.com.saulusribeiro.springbackend.services;
 import java.util.List;
 import java.util.Optional;
 
-import javax.validation.constraints.NotEmpty;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -17,14 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.saulusribeiro.springbackend.domain.Cidade;
 import br.com.saulusribeiro.springbackend.domain.Cliente;
 import br.com.saulusribeiro.springbackend.domain.Endereco;
+import br.com.saulusribeiro.springbackend.domain.enums.Perfil;
 import br.com.saulusribeiro.springbackend.domain.enums.TipoCliente;
 import br.com.saulusribeiro.springbackend.dto.ClienteDTO;
 import br.com.saulusribeiro.springbackend.dto.ClienteNewDTO;
 import br.com.saulusribeiro.springbackend.repositories.CidadeRepository;
 import br.com.saulusribeiro.springbackend.repositories.ClienteRepository;
 import br.com.saulusribeiro.springbackend.repositories.EnderecoRepository;
+import br.com.saulusribeiro.springbackend.security.UserSS;
+import br.com.saulusribeiro.springbackend.services.exceptions.AuthorizationException;
 import br.com.saulusribeiro.springbackend.services.exceptions.DataIntegrityException;
-import br.com.saulusribeiro.springbackend.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ClienteService {
@@ -40,6 +40,12 @@ public class ClienteService {
 	private CidadeRepository   cidadeRepo;
 
 	public Cliente find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso Negado");
+		}
 
 		Optional<Cliente> obj = repo.findById(id);
 

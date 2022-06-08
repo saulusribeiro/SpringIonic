@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import br.com.saulusribeiro.springbackend.services.exceptions.AuthorizationException;
 import br.com.saulusribeiro.springbackend.services.exceptions.DataIntegrityException;
 import br.com.saulusribeiro.springbackend.services.exceptions.ObjectNotFoundException;
 
@@ -46,5 +47,11 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
 	}	
 
+	@ExceptionHandler(AuthorizationException.class)
+	public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request) {
+		
+		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(), "Acesso Negado", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
+	}
 
 }
