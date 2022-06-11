@@ -25,6 +25,7 @@ import br.com.saulusribeiro.springbackend.repositories.EnderecoRepository;
 import br.com.saulusribeiro.springbackend.security.UserSS;
 import br.com.saulusribeiro.springbackend.services.exceptions.AuthorizationException;
 import br.com.saulusribeiro.springbackend.services.exceptions.DataIntegrityException;
+import br.com.saulusribeiro.springbackend.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ClienteService {
