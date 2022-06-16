@@ -155,10 +155,15 @@ public class ClienteService {
 
 	}
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
-	/*	UserSS user = UserService.authenticated();
+		UserSS user = UserService.authenticated();
 		if (user == null) {
 			throw new AuthorizationException("Acesso negado");
-		} */
+		} 
+		
+		URI uri = s3Service.uploadFile(multipartFile);
+		Cliente cli = repo.getById(user.getId());
+		cli.setImageUrl(uri.toString());
+		repo.save(cli);
 		
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
 		jpgImage = imageService.cropSquare(jpgImage);
