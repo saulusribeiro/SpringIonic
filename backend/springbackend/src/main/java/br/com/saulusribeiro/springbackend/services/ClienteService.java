@@ -160,18 +160,14 @@ public class ClienteService {
 			throw new AuthorizationException("Acesso negado");
 		} 
 		
-		URI uri = s3Service.uploadFile(multipartFile);
-		Cliente cli = repo.getById(user.getId());
-		cli.setImageUrl(uri.toString());
-		repo.save(cli);
-		
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+	
 		jpgImage = imageService.cropSquare(jpgImage);
 		jpgImage = imageService.resize(jpgImage, size);
 		
-//		String fileName = prefix + user.getId() + ".jpg";
-		String fileName = prefix + "A9999" + ".jpg";
-	
+		URI uri = s3Service.uploadFile(multipartFile);
+		String fileName = prefix + user.getId() + ".jpg";
+
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	}
 }
