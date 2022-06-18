@@ -1,4 +1,5 @@
 package br.com.saulusribeiro.springbackend.resources.exception;
+
 import java.util.ArrayList;
 import java.util.List;
 

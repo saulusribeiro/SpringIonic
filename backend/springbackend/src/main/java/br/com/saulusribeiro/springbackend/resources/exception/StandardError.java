@@ -1,4 +1,6 @@
 package br.com.saulusribeiro.springbackend.resources.exception;
+
+
 import java.io.Serializable;
 
 public class StandardError implements Serializable {
